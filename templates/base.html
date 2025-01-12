@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confeso - The anonymous confession platform</title>
+    <!-- Import Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e3f2fd;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #3f51b5;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .confession-text {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .timestamp {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* Remove the green part when input is focused */
+        .input-field input:focus,
+        .input-field textarea:focus {
+            border-bottom: 1px solid #3f51b5; /* You can change this color if needed */
+            box-shadow: none; /* Remove the focus shadow */
+        }
+
+        .input-field input,
+        .input-field textarea {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #3f51b5;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #303f9f;
+        }
+
+        .collection-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .collection-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-action a {
+            border-radius: 20px;
+        }
+
+        .card-action .btn {
+            margin-right: 10px;
+        }
+
+        .modal {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Confeso - confess anonymously</h1>
+
+        <!-- Post Confession Form -->
+        <div class="card">
+            <div class="card-content">
+                <form action="/post_confession" method="POST">
+                    <div class="input-field">
+                        <textarea id="content" name="content" class="materialize-textarea" placeholder="Write your confession..." required></textarea>
+                        <label for="content">Write your confession</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Post Confession</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Confessions List -->
+        <div class="row">
+            {% for confession in confessions %}
+            <div class="col s12 m6 l4">
+                <div class="card animated fadeInUp">
+                    <div class="card-content">
+                        <p class="confession-text">{{ confession.content }}</p>
+                        <!-- Display the timestamp -->
+                        <p class="timestamp">{{ confession.timestamp.strftime('%B %d, %Y %I:%M %p') }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Import Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // Add animation effect on page load for confessions
+        document.addEventListener('DOMContentLoaded', function() {
+            var elements = document.querySelectorAll('.animated');
+            elements.forEach(function(el) {
+                el.classList.add('fadeInUp');
+            });
+        });
+    </script>
+</body>
+</html>
