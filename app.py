@@ -6,7 +6,6 @@ import pytz
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
-app.config["MONGO_URI"] = "mongodb+srv://satyamkumarverman:GQVEhFHLlykNsUgr@twitty.mylyp.mongodb.net/your_database_name?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 # Test the MongoDB connection
